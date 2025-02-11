@@ -1,5 +1,105 @@
+:root {
+    --rootFont: monospace;
+    --rootBlue:#0e66ad;
+    --rootFontColor: #3a3a3a;
+    --rootLogoFontSize: 1.5rem;
+}
+
 * {
     padding: 0px;
     margin: 0px;
     box-sizing: border-box;
+    font-family: var(--rootFont);
+    /* border: 1px solid black; */
+}
+
+header {
+    display: flex;
+    justify-content: flex-start;
+    padding: 1rem 3rem;
+    font-size: var(--rootLogoFontSize);
+    font-weight: bold;
+    color: var(--rootBlue);
+}
+
+#body {
+    display: flex;
+}
+
+#navBar {
+    display: flex;
+    flex-direction: column;
+    padding: 0rem 3.5rem;
+}
+
+#navBar > button {
+    border: 0px;
+    background-color: white;
+    color: var(--rootFontColor);
+    text-align: left;
+    font-size: var(--rootLogoFontSize);
+    padding: 1rem 0rem;
+}
+
+#content, #content > div {
+    display: flex;
+}
+
+
+.card {
+    margin: 1rem;
+    border: 0px;
+    width: 20rem;
+    height: 10rem;
+    padding: 0.5rem 2rem;
+    border-radius: 1rem;
+    background-color: rgb(232, 232, 232);
+    color: var(--rootFontColor);
+}
+
+.projectCard, .taskCard {
+    display: flex;
+    justify-content: space-between;
+}
+
+.taskCard {
+    border-left: 1rem solid red;
+}
+
+.projectCard > button , .taskCard > button {
+    color: var(--rootFontColor);
+    transform: translateY(-2px);
+    font-size: large;
+    font-weight: 900;
+    align-self: first baseline;
+    border: 0px;
+    background-color: rgb(232, 232, 232);
+}
+
+.addProjectButtonCard {
+    font-size: calc(var(--rootLogoFontSize)*3);
+}
+
+.detailedCard {
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: flex-start;
+    margin: 1rem;
+    border: 0px;
+    width: 60vh;
+    height: 85vh;
+    padding: 2rem 3rem;
+    border-radius: 1rem;
+    background-color: rgb(232, 232, 232);
+    color: var(--rootFontColor);
+}
+
+.detailedCard > button {
+    width: 75%;
+    text-align: left;
+    padding: 0.5rem;
+    border: 0px;
+    border-radius: 1rem;
+    background-color: var(--rootBlue);
+    color: white;
 }
