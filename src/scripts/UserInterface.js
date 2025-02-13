@@ -86,4 +86,53 @@ export class UserInterface {
         button.textContent = "+";
         return button;
     }
+
+    createProjectFormDiv() {
+        let div = document.createElement("div");
+        let form = document.createElement("form");
+        form.classList.add("projectForm", "displayRight");
+        form.appendChild(this.createFormField("Title", "text", "title"));
+        form.appendChild(this.createFormField("Description", "textarea", "description"));
+        form.appendChild(this.createSubmitButton());
+
+        div.appendChild(form);
+        return div;
+    }
+
+    createFormField(labelText, type, id) {
+        let fieldDiv = document.createElement("div");
+
+        let label = document.createElement("label");
+        label.setAttribute("for", id);
+        label.textContent = labelText;
+
+        let input;
+        if (type === "textarea") {
+            input = document.createElement("textarea");
+        } else {
+            input = document.createElement("input");
+            input.setAttribute("type", type);
+        }
+        
+        input.setAttribute("id", id);
+        input.setAttribute("name", id);
+        input.required = true;
+
+        fieldDiv.appendChild(label);
+        fieldDiv.appendChild(input);
+
+        return fieldDiv;
+    }
+
+    createSubmitButton() {
+        let buttonDiv = document.createElement("div");
+
+        let button = document.createElement("button");
+        button.setAttribute("type", "submit");
+        button.textContent = "Create";
+
+        buttonDiv.appendChild(button);
+
+        return buttonDiv;
+    }
 }
