@@ -42,16 +42,36 @@ export class UserInterface {
 
     divTasks(tasks) {
         let div = document.createElement("div");
-        tasks.forEach(task => {
-            let taskDiv = this.divTaskCard(task.getTitle(), task.getPriority());
+        tasks.forEach((task, index) => {
+            let taskDiv = this.divTaskCard(task, index);
             div.appendChild(taskDiv);
         });
         return div;
     }
 
+    displayTaskDetails(targetTask) {
+        let div = document.createElement("div");
+        let title = document.createElement("h2");
+        let description = document.createElement("p");
+        let dueDate = document.createElement("p");
+        let priority = document.createElement("p");
+
+        div.classList.add("detailedCard", "taskDetail");
+
+        title.textContent = targetTask.getTitle();
+        description.textContent = targetTask.getDescription();
+        dueDate.textContent = targetTask.getDueDate();
+        priority.textContent = targetTask.getPriority();
+
+        div.appendChild(title);
+        div.appendChild(description);
+        div.appendChild(dueDate);
+        div.appendChild(priority);
+
+        return div;
+    }
+
     divProjectCard(project, index) {
-        // console.log(project);
-        // console.log(index);
         let div = document.createElement("div");
         div.classList.add("projectCard", "card");
         let name = document.createElement("h2");
@@ -66,17 +86,27 @@ export class UserInterface {
         return div;
     }
 
-    divTaskCard(nameCard, priority) {
+    divTaskCard(task, index) {
         let div = document.createElement("div");
         div.classList.add("taskCard", "card");
         let name = document.createElement("h2");
-        name.textContent = nameCard;
+        name.textContent = task.getTitle();
         let button = document.createElement("button");
         button.classList.add("taskButton");
         button.textContent = "...";
+        button.value = index;
+        button.setAttribute("clicked", "false");
         div.appendChild(name);
         div.appendChild(button);
         div.style.borderLeft = "1rem solid red";
+        switch(task.getPriority()) {
+            case "high":
+                div.style.borderLeft = '1rem solid red';
+            case "medium":
+                div.style.borderLeft = '1rem solid yellow';
+            case "low":
+                div.style.borderLeft = '1rem solid green';
+        }
         return div; 
     }
 

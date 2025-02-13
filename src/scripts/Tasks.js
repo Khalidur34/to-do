@@ -1,12 +1,12 @@
 export class Tasks {
-    allTasks = [];
+    tasks = [];
     constructor() {};
 
     allTasks() {
-        return this.allTasks;
+        return this.tasks;
     }
 
     addTask(task) {
-        this.allTasks.push(task);
+        this.tasks.push(task);
     }
 }

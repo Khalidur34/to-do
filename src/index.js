@@ -8,24 +8,24 @@ import { Task } from "../src/scripts/Task";
 import { RightDisplay } from "./scripts/RightDisplay";
 import { MainDisplay } from "./scripts/MainDisplay";
 import { ProjectPage } from "./scripts/ProjectPage";
+import { TaskPage } from "./scripts/TaskPage";
 
-const displayCardContent = document.querySelector("#displayCard");
 const bodyContent = document.querySelector("#content");
 const homeButton = document.querySelector(".home");
 const projectsButton = document.querySelector(".projects");
 
-const projectPage = new ProjectPage();
+const projects = new Projects();
 const mainDislay = new MainDisplay();
 const rightDisplay = new RightDisplay();
 const tasks = new Tasks();
-const projects = new Projects();
-const ui = new UserInterface();
-
+const projectPage = new ProjectPage(projects, mainDislay, rightDisplay);
+const taskPage = new TaskPage(tasks, mainDislay, rightDisplay);
+const task = new Task("title", "myDescription", "Tomorrow", "low");
+tasks.addTask(task);
 //pressing home button displays all the tasks
 homeButton.addEventListener('click', () => {
-    let currTasks = tasks.allTasks;
-    bodyContent.removeChild(bodyContent.lastChild);
-    bodyContent.appendChild(ui.divTasks(currTasks));
+    //main task tab
+    taskPage.load();
 });
 
 //pressing project button displays all the projects

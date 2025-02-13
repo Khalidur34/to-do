@@ -5,11 +5,16 @@ import { RightDisplay } from "./RightDisplay";
 import { Project } from "./Project";
 
 export class ProjectPage{
-    projects = new Projects();
+    projects;
+    mainDisplay;
+    rightDisplay;
     ui = new UserInterface();
-    mainDisplay = new MainDisplay();
-    rightDisplay = new RightDisplay();
-    constructor() {};
+
+    constructor(projects, mainDisplay, rightDisplay) {
+        this.projects = projects
+        this.mainDisplay = mainDisplay;
+        this.rightDisplay = rightDisplay;
+    };
 
     load() {
         //clear bodycontent and displays all the projects
@@ -24,6 +29,7 @@ export class ProjectPage{
 
     loadProjects() {
         let projectsDiv = this.ui.divProjects(this.projects.allProjects());
+        this.rightDisplay.removeContent();
         this.mainDisplay.addContent(projectsDiv);
     }
 
@@ -65,9 +71,7 @@ export class ProjectPage{
     addDisplayProjectButtonListener(button) {
         button.addEventListener('click', () => {
             if(button.getAttribute("clicked") === "false") {
-                let targetProject = this.projects.allProjects()[button.value];
-                console.log(targetProject);
-                this.rightDisplay.addContent(this.ui.displayProjectDetails(targetProject));
+                this.displayProjectDetails(button);
                 button.setAttribute("clicked", "true");
             }
             else {
@@ -75,6 +79,13 @@ export class ProjectPage{
                 button.setAttribute("clicked", "false");
             }
         });
+    }
+
+    displayProjectDetails(button) {
+        let targetProject = this.projects.allProjects()[button.value];
+        console.log(targetProject);
+        this.rightDisplay.addContent(this.ui.displayProjectDetails(targetProject));
+
     }
 
     

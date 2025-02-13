@@ -9,7 +9,16 @@ export class Task {
     getTitle() {
         return this.title;
     }
+
     getPriority() {
         return this.priority;
+    }
+
+    getDescription() {
+        return this.description;
+    }
+
+    getDueDate() {
+        return this.dueDate;
     }
 }
