@@ -1,11 +1,13 @@
-export class UserInterface {
+import { UIComponent } from "./UIComponent";
 
+export class UserInterface {
+    uiComponent = new UIComponent();
     constructor() {
         
     }
 
     divProjects(projects) {
-        let div = document.createElement("div");
+        const div = this.uiComponent.div();
         projects.forEach((project,index) => {
             let projectDiv = this.divProjectCard(project, index);
             div.appendChild(projectDiv);
@@ -16,26 +18,24 @@ export class UserInterface {
     }
 
     displayProjectDetails(targetProject) {
-        let div = document.createElement("div");
-        let title = document.createElement("h2");
-        let description = document.createElement("p");
-        let task = document.createElement("p");
-
-        div.classList.add("detailedCard", "projectDetail");
-
-        title.textContent = targetProject.getTitle();
-        description.textContent = targetProject.getDescription();
-        let projectTasks = targetProject.getTasks();
-
-        div.appendChild(title);
-        div.appendChild(description);
+        const div = this.uiComponent.bigCard(targetProject.getTitle(), targetProject.getDescription());
+        const task = document.createElement("p");
+        task.textContent = "Tasks:"
         div.appendChild(task);
 
+        const projectTasks = targetProject.getTasks();
         projectTasks.forEach(task => {
-            let button = document.createElement("button");
+            const button = this.uiComponent.button();
             button.textContent = task.getTitle();
             div.appendChild(button);
         });
+
+        const secondDiv = this.uiComponent.div();
+        const addNewTaskButton = this.uiComponent.actionButton("Add Task");       
+        secondDiv.appendChild(addNewTaskButton);
+        secondDiv.appendChild(this.deleteButton());
+
+        div.appendChild(secondDiv);
 
         return div;
     }
@@ -50,64 +50,34 @@ export class UserInterface {
     }
 
     displayTaskDetails(targetTask) {
-        let div = document.createElement("div");
-        let title = document.createElement("h2");
-        let description = document.createElement("p");
+        const div = this.uiComponent.bigCard(targetTask.getTitle(), targetTask.getDescription());
         let dueDate = document.createElement("p");
         let priority = document.createElement("p");
-
-        div.classList.add("detailedCard", "taskDetail");
-
-        title.textContent = targetTask.getTitle();
-        description.textContent = targetTask.getDescription();
         dueDate.textContent = targetTask.getDueDate();
         priority.textContent = targetTask.getPriority();
-
-        div.appendChild(title);
-        div.appendChild(description);
         div.appendChild(dueDate);
         div.appendChild(priority);
+        div.appendChild(this.deleteButton());
 
         return div;
     }
 
     divProjectCard(project, index) {
-        let div = document.createElement("div");
-        div.classList.add("projectCard", "card");
-        let name = document.createElement("h2");
-        name.textContent = project.getTitle();
-        let button = document.createElement("button");
-        button.classList.add("projectButton");
-        button.value = index;
-        button.setAttribute("clicked", "false");
-        button.textContent = "..."; 
-        div.appendChild(name);
-        div.appendChild(button);
-        return div;
+        const card = this.uiComponent.smallCard(project.getTitle(), project.getDescription(), index);
+        return card;
     }
 
     divTaskCard(task, index) {
-        let div = document.createElement("div");
-        div.classList.add("taskCard", "card");
-        let name = document.createElement("h2");
-        name.textContent = task.getTitle();
-        let button = document.createElement("button");
-        button.classList.add("taskButton");
-        button.textContent = "...";
-        button.value = index;
-        button.setAttribute("clicked", "false");
-        div.appendChild(name);
-        div.appendChild(button);
-        div.style.borderLeft = "1rem solid red";
+        const card = this.uiComponent.smallCard(task.getTitle(), task.getDescription(), index);
         switch(task.getPriority()) {
             case "high":
-                div.style.borderLeft = '1rem solid red';
+                card.style.borderLeft = '1rem solid red';
             case "medium":
-                div.style.borderLeft = '1rem solid yellow';
+                card.style.borderLeft = '1rem solid yellow';
             case "low":
-                div.style.borderLeft = '1rem solid green';
+                card.style.borderLeft = '1rem solid green';
         }
-        return div; 
+        return card; 
     }
 
     divAddProjectCard() {
@@ -164,5 +134,11 @@ export class UserInterface {
         buttonDiv.appendChild(button);
 
         return buttonDiv;
+    }
+
+    deleteButton() {
+        const deleteButton = this.uiComponent.actionButton("Delete");
+        deleteButton.classList.add("deleteButton");
+        return deleteButton;
     }
 }

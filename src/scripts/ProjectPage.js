@@ -62,7 +62,7 @@ export class ProjectPage{
     }
 
     projectDetailButtonListener() {
-        const projectDetailButtons = document.querySelectorAll(".projectButton");
+        const projectDetailButtons = document.querySelectorAll(".detailButton");
         projectDetailButtons.forEach(button => {
             this.addDisplayProjectButtonListener(button);
         });
@@ -85,8 +85,16 @@ export class ProjectPage{
         let targetProject = this.projects.allProjects()[button.value];
         console.log(targetProject);
         this.rightDisplay.addContent(this.ui.displayProjectDetails(targetProject));
-
+        this.deleteProject(button.value) 
     }
 
+    deleteProject(projectIndex) {
+        const deleteButton = document.querySelector('.deleteButton');
+        deleteButton.addEventListener('click', () => {
+            this.rightDisplay.removeContent();
+            this.projects.allProjects().splice(projectIndex, 1);
+            this.load();
+        }); 
+    }
     
 }

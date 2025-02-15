@@ -20,8 +20,12 @@ const rightDisplay = new RightDisplay();
 const tasks = new Tasks();
 const projectPage = new ProjectPage(projects, mainDislay, rightDisplay);
 const taskPage = new TaskPage(tasks, mainDislay, rightDisplay);
-const task = new Task("title", "myDescription", "Tomorrow", "low");
-tasks.addTask(task);
+const sampleTask = new Task("title", "myDescription", "Tomorrow", "low");
+const sampleProject = new Project("My Project", "Lorem Ipsum", tasks.allTasks());
+projects.addProject(sampleProject);
+tasks.addTask(sampleTask);
+
+taskPage.load();
 //pressing home button displays all the tasks
 homeButton.addEventListener('click', () => {
     //main task tab

@@ -26,7 +26,7 @@ export class TaskPage {
         this.mainDisplay.addContent(tasksDiv);
     }
     taskDetailButtonListener() {
-        const taskDetailButtons = document.querySelectorAll(".taskButton");
+        const taskDetailButtons = document.querySelectorAll(".detailButton");
         taskDetailButtons.forEach(button => {
             this.addDisplayTaskButtonListener(button);
         });
@@ -49,6 +49,16 @@ export class TaskPage {
         let targetTask = this.tasks.allTasks()[button.value];
         console.log(targetTask);
         this.rightDisplay.addContent(this.ui.displayTaskDetails(targetTask));
+        this.deleteTask(button.value);
+    }
+
+    deleteTask(taskIndex) {
+        const deleteButton = document.querySelector('.deleteButton');
+        deleteButton.addEventListener('click', () => {
+            this.rightDisplay.removeContent();
+            this.tasks.allTasks().splice(taskIndex, 1);
+            this.load();
+        }); 
     }
 
 }
