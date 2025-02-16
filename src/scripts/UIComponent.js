@@ -45,8 +45,6 @@ export class UIComponent {
         return div;
     }
 
-    
-
     button() {
         const button = document.createElement("button");
         return button;
@@ -54,6 +52,39 @@ export class UIComponent {
 
     div() {
         const div = document.createElement("div");
+        return div;
+    }
+
+    formLabel(labelText, id) {
+        const label = document.createElement("label");
+        label.setAttribute("for", id);
+        label.textContent = labelText;
+        return label;
+    }
+
+    formFieldTypeInput(type, idName, labelText) {
+        const div = this.div();
+        const label = this.formLabel(labelText, idName);
+        const input = document.createElement("input");
+        input.setAttribute("type", type);
+        input.setAttribute("id", idName);
+        input.setAttribute("name", idName);
+        if(type === "radio") {
+            input.setAttribute("value", labelText.toLowerCase());
+        }
+        input.required = true;
+        div.append(label, input);
+        return div;
+    }
+
+    formFieldTypeTextArea(idName, labelText) {
+        const div = this.div();
+        const label =  this.formLabel(labelText, idName);
+        const textarea = document.createElement("textarea");
+        textarea.setAttribute("id", idName);
+        textarea.setAttribute("name", idName);
+        textarea.required = true;
+        div.append(label, textarea);
         return div;
     }
 }

@@ -31,7 +31,8 @@ export class UserInterface {
         });
 
         const secondDiv = this.uiComponent.div();
-        const addNewTaskButton = this.uiComponent.actionButton("Add Task");       
+        const addNewTaskButton = this.uiComponent.actionButton("Add Task");
+        addNewTaskButton.classList.add("addTask");       
         secondDiv.appendChild(addNewTaskButton);
         secondDiv.appendChild(this.deleteButton());
 
@@ -56,7 +57,7 @@ export class UserInterface {
         dueDate.textContent = targetTask.getDueDate();
         priority.textContent = targetTask.getPriority();
         div.appendChild(dueDate);
-        div.appendChild(priority);
+        div.appendChild(priority);  
         div.appendChild(this.deleteButton());
 
         return div;
@@ -88,40 +89,30 @@ export class UserInterface {
     }
 
     createProjectFormDiv() {
-        let div = document.createElement("div");
-        let form = document.createElement("form");
+        const div = this.uiComponent.div();
+        const form = document.createElement("form");
         form.classList.add("projectForm", "displayRight");
-        form.appendChild(this.createFormField("Title", "text", "title"));
-        form.appendChild(this.createFormField("Description", "textarea", "description"));
+        form.appendChild(this.uiComponent.formFieldTypeInput("text", "title", "Title"));
+        form.appendChild(this.uiComponent.formFieldTypeTextArea("description", "Description"));
         form.appendChild(this.createSubmitButton());
-
         div.appendChild(form);
         return div;
     }
 
-    createFormField(labelText, type, id) {
-        let fieldDiv = document.createElement("div");
-
-        let label = document.createElement("label");
-        label.setAttribute("for", id);
-        label.textContent = labelText;
-
-        let input;
-        if (type === "textarea") {
-            input = document.createElement("textarea");
-        } else {
-            input = document.createElement("input");
-            input.setAttribute("type", type);
-        }
-        
-        input.setAttribute("id", id);
-        input.setAttribute("name", id);
-        input.required = true;
-
-        fieldDiv.appendChild(label);
-        fieldDiv.appendChild(input);
-
-        return fieldDiv;
+    createTaskFormDiv() {
+        const div = this.uiComponent.div();
+        const form = document.createElement("form");
+        form.appendChild(this.uiComponent.formFieldTypeInput("text", "title", "Title"));
+        form.appendChild(this.uiComponent.formFieldTypeTextArea("description", "Description"));
+        form.appendChild(this.uiComponent.formFieldTypeInput("date", "dueDate", "Due Date"));
+        const div2 = this.uiComponent.div();
+        div2.appendChild(this.uiComponent.formFieldTypeInput("radio", "priority", "High"));
+        div2.appendChild(this.uiComponent.formFieldTypeInput("radio", "priority", "Medium"));
+        div2.appendChild(this.uiComponent.formFieldTypeInput("radio", "priority", "Low"));
+        form.appendChild(div2);
+        form.appendChild(this.uiComponent.formFieldTypeInput("submit", "submit", ""))
+        div.appendChild(form);
+        return div;
     }
 
     createSubmitButton() {
@@ -129,7 +120,7 @@ export class UserInterface {
 
         let button = document.createElement("button");
         button.setAttribute("type", "submit");
-        button.textContent = "Create";
+        button.textContent = "  Create";
 
         buttonDiv.appendChild(button);
 

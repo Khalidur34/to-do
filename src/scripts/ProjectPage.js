@@ -1,8 +1,6 @@
-import { Projects } from "./Projects"
 import { UserInterface } from "./UserInterface";
-import { MainDisplay } from "./MainDisplay";
-import { RightDisplay } from "./RightDisplay";
 import { Project } from "./Project";
+import { Task } from "./Task";
 
 export class ProjectPage{
     projects;
@@ -71,7 +69,8 @@ export class ProjectPage{
     addDisplayProjectButtonListener(button) {
         button.addEventListener('click', () => {
             if(button.getAttribute("clicked") === "false") {
-                this.displayProjectDetails(button);
+                const targetProject = this.projects.allProjects()[button.value];
+                this.displayProjectDetails(targetProject);
                 button.setAttribute("clicked", "true");
             }
             else {
@@ -81,12 +80,39 @@ export class ProjectPage{
         });
     }
 
-    displayProjectDetails(button) {
-        let targetProject = this.projects.allProjects()[button.value];
-        console.log(targetProject);
+    displayProjectDetails(targetProject) {
         this.rightDisplay.addContent(this.ui.displayProjectDetails(targetProject));
-        this.deleteProject(button.value) 
+        this.addNewTaskButtonListener(targetProject);
+        //this.deleteProject(button.value) 
     }
+
+    addNewTaskButtonListener = (targetProject) => {
+        const addTaskButton = document.querySelector('.addTask');
+        addTaskButton.addEventListener('click', () => this.displayTaskCreationForm(targetProject));
+    }
+
+    displayTaskCreationForm = (targetProject) => {
+        console.log("Hello");
+        const createTaskFormDiv = this.ui.createTaskFormDiv();
+        this.rightDisplay.addContent(createTaskFormDiv);
+        this.taskFormSubmissionHandler(createTaskFormDiv, targetProject);
+    }
+
+    taskFormSubmissionHandler = (div, targetProject) => {
+        div.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const form = e.target;
+            const formData = new FormData(form);
+            
+            const title = formData.get("title");
+            const description = formData.get("description");
+            const dueDate = formData.get("dueDate");
+            const priority = formData.get("priority");
+            const task = new Task(title, description, dueDate, priority);
+            targetProject.addTask(task);
+            this.displayProjectDetails(targetProject);
+        });
+    };
 
     deleteProject(projectIndex) {
         const deleteButton = document.querySelector('.deleteButton');
