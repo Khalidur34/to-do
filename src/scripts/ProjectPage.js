@@ -83,7 +83,7 @@ export class ProjectPage{
     displayProjectDetails(targetProject) {
         this.rightDisplay.addContent(this.ui.displayProjectDetails(targetProject));
         this.addNewTaskButtonListener(targetProject);
-        //this.deleteProject(button.value) 
+        this.deleteProject(targetProject); 
     }
 
     addNewTaskButtonListener = (targetProject) => {
@@ -114,11 +114,12 @@ export class ProjectPage{
         });
     };
 
-    deleteProject(projectIndex) {
+    deleteProject(targetProject) {
         const deleteButton = document.querySelector('.deleteButton');
         deleteButton.addEventListener('click', () => {
+            let temp = this.projects.allProjects().findIndex((targetProject) => targetProject == deleteButton.value);
+            this.projects.allProjects().splice(temp, 1);
             this.rightDisplay.removeContent();
-            this.projects.allProjects().splice(projectIndex, 1);
             this.load();
         }); 
     }

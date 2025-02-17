@@ -32,9 +32,11 @@ export class UserInterface {
 
         const secondDiv = this.uiComponent.div();
         const addNewTaskButton = this.uiComponent.actionButton("Add Task");
-        addNewTaskButton.classList.add("addTask");       
+        const deleteButton = this.deleteButton();
+        addNewTaskButton.classList.add("addTask");
+        deleteButton.value = targetProject;      
         secondDiv.appendChild(addNewTaskButton);
-        secondDiv.appendChild(this.deleteButton());
+        secondDiv.appendChild(deleteButton);
 
         div.appendChild(secondDiv);
 
