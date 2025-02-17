@@ -49,6 +49,8 @@ export class UserInterface {
             let taskDiv = this.divTaskCard(task, index);
             div.appendChild(taskDiv);
         });
+        div.appendChild(this.divAddTaskCard());
+        
         return div;
     }
 
@@ -75,10 +77,14 @@ export class UserInterface {
         switch(task.getPriority()) {
             case "high":
                 card.style.borderLeft = '1rem solid red';
-            case "medium":
+                break;
+            case "medium":               
                 card.style.borderLeft = '1rem solid yellow';
+                break;
             case "low":
                 card.style.borderLeft = '1rem solid green';
+                break;
+            default:
         }
         return card; 
     }
@@ -86,6 +92,13 @@ export class UserInterface {
     divAddProjectCard() {
         let button = document.createElement("button");
         button.classList.add("addProjectButtonCard", "card");
+        button.textContent = "+";
+        return button;
+    }
+
+    divAddTaskCard() {
+        let button = document.createElement("button");
+        button.classList.add("addTaskButton", "card");
         button.textContent = "+";
         return button;
     }

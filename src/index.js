@@ -20,7 +20,7 @@ const rightDisplay = new RightDisplay();
 const tasks = new Tasks();
 const projectPage = new ProjectPage(projects, mainDislay, rightDisplay);
 const taskPage = new TaskPage(tasks, mainDislay, rightDisplay);
-const sampleTask = new Task("title", "myDescription", "Tomorrow", "low");
+const sampleTask = new Task("title", "myDescription", "Tomorrow", "medium");
 const sampleProject = new Project("My Project", "Lorem Ipsum", tasks.allTasks());
 projects.addProject(sampleProject);
 tasks.addTask(sampleTask);

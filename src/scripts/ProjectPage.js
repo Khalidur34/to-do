@@ -92,7 +92,6 @@ export class ProjectPage{
     }
 
     displayTaskCreationForm = (targetProject) => {
-        console.log("Hello");
         const createTaskFormDiv = this.ui.createTaskFormDiv();
         this.rightDisplay.addContent(createTaskFormDiv);
         this.taskFormSubmissionHandler(createTaskFormDiv, targetProject);
