@@ -26,7 +26,7 @@ export class TaskPage {
     }
 
     addNewTaskButtonListener = () => {
-        const addTaskButton = document.querySelector(".addTaskButton");
+        const addTaskButton = document.querySelector(".addButton");
         addTaskButton.addEventListener('click', () => this.displayTaskCreationForm());
     }
 
@@ -41,17 +41,20 @@ export class TaskPage {
             e.preventDefault();
             const form = e.target;
             const formData = new FormData(form);
-            
             const title = formData.get("title");
             const description = formData.get("description");
             const dueDate = formData.get("dueDate");
             const priority = formData.get("priority");
             const task = new Task(title, description, dueDate, priority);
-            this.tasks.addTask(task);
-            this.rightDisplay.removeContent();
-            this.load();
+            this.addNewTask(task);
         });
-    };
+    }
+
+    addNewTask(task) {
+        this.tasks.addTask(task);
+        this.rightDisplay.removeContent();
+        this.load();
+    }
 
     taskDetailButtonListener() {
         const taskDetailButtons = document.querySelectorAll(".detailButton");

@@ -8,20 +8,16 @@ export class ProjectPage{
     rightDisplay;
     ui = new UserInterface();
 
-    constructor(projects, mainDisplay, rightDisplay) {
+    constructor(tasks, projects, mainDisplay, rightDisplay) {
+        this.tasks = tasks;
         this.projects = projects
         this.mainDisplay = mainDisplay;
         this.rightDisplay = rightDisplay;
     };
 
     load() {
-        //clear bodycontent and displays all the projects
         this.loadProjects();
-
-        //pops a form in the right to create a new project
         this.addNewProjectButtonListener();
-
-        //pops project details in the right
         this.projectDetailButtonListener();
     }
 
@@ -32,7 +28,7 @@ export class ProjectPage{
     }
 
     addNewProjectButtonListener = () => {
-        const addProjectButton = document.querySelector(".addProjectButtonCard");
+        const addProjectButton = document.querySelector(".addButton");
         addProjectButton.addEventListener('click', this.displayProjectCreationForm);
     };
 
@@ -45,11 +41,13 @@ export class ProjectPage{
     projectFormSubmissionHandler = (div) => {
         div.addEventListener('submit', (e) => {
             e.preventDefault();
-            let projectTitle = document.querySelector('[name = "title"]').value;
-            let projectDescription = document.querySelector('[name = "description"]').value;
-            let projectTasks = [];
-            const thisProject = new Project(projectTitle, projectDescription, projectTasks);
-            this.addNewProject(thisProject);
+            const form = e.target;
+            const formData = new FormData(form);
+            const title = formData.get("title");
+            const description = formData.get("description");
+            const projectTasks = [];
+            const newProject = new Project(title, description, projectTasks);
+            this.addNewProject(newProject);
             this.rightDisplay.removeContent();
         });
     };
@@ -108,6 +106,7 @@ export class ProjectPage{
             const dueDate = formData.get("dueDate");
             const priority = formData.get("priority");
             const task = new Task(title, description, dueDate, priority);
+            this.tasks.addTask(task);
             targetProject.addTask(task);
             this.displayProjectDetails(targetProject);
         });

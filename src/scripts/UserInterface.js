@@ -12,7 +12,7 @@ export class UserInterface {
             let projectDiv = this.divProjectCard(project, index);
             div.appendChild(projectDiv);
         });
-        div.appendChild(this.divAddProjectCard());
+        div.appendChild(this.divAddTaskOrProject());
 
         return div;
     }
@@ -33,7 +33,7 @@ export class UserInterface {
         const secondDiv = this.uiComponent.div();
         const addNewTaskButton = this.uiComponent.actionButton("Add Task");
         const deleteButton = this.deleteButton();
-        addNewTaskButton.classList.add("addTask");
+        addNewTaskButton.classList.add("addTask", "heroButton");
         deleteButton.value = targetProject;      
         secondDiv.appendChild(addNewTaskButton);
         secondDiv.appendChild(deleteButton);
@@ -49,7 +49,7 @@ export class UserInterface {
             let taskDiv = this.divTaskCard(task, index);
             div.appendChild(taskDiv);
         });
-        div.appendChild(this.divAddTaskCard());
+        div.appendChild(this.divAddTaskOrProject());
         
         return div;
     }
@@ -59,7 +59,7 @@ export class UserInterface {
         let dueDate = document.createElement("p");
         let priority = document.createElement("p");
         dueDate.textContent = targetTask.getDueDate();
-        priority.textContent = targetTask.getPriority();
+        priority.textContent = "Priority: " + targetTask.getPriority().toUpperCase();
         div.appendChild(dueDate);
         div.appendChild(priority);  
         div.appendChild(this.deleteButton());
@@ -73,8 +73,9 @@ export class UserInterface {
     }
 
     divTaskCard(task, index) {
-        const card = this.uiComponent.smallCard(task.getTitle(), task.getDescription(), index);
-        switch(task.getPriority()) {
+        console.log(task);
+        const card = this.uiComponent.smallCard(task.title, task.description, index);
+        switch(task.priority) {
             case "high":
                 card.style.borderLeft = '1rem solid red';
                 break;
@@ -89,16 +90,9 @@ export class UserInterface {
         return card; 
     }
 
-    divAddProjectCard() {
+    divAddTaskOrProject() {
         let button = document.createElement("button");
-        button.classList.add("addProjectButtonCard", "card");
-        button.textContent = "+";
-        return button;
-    }
-
-    divAddTaskCard() {
-        let button = document.createElement("button");
-        button.classList.add("addTaskButton", "card");
+        button.classList.add("addButton", "card");
         button.textContent = "+";
         return button;
     }
@@ -117,6 +111,7 @@ export class UserInterface {
     createTaskFormDiv() {
         const div = this.uiComponent.div();
         const form = document.createElement("form");
+        form.classList.add("displayRight");
         form.appendChild(this.uiComponent.formFieldTypeInput("text", "title", "Title"));
         form.appendChild(this.uiComponent.formFieldTypeTextArea("description", "Description"));
         form.appendChild(this.uiComponent.formFieldTypeInput("date", "dueDate", "Due Date"));
@@ -135,7 +130,7 @@ export class UserInterface {
 
         let button = document.createElement("button");
         button.setAttribute("type", "submit");
-        button.textContent = "  Create";
+        button.textContent = "Create";
 
         buttonDiv.appendChild(button);
 
@@ -143,8 +138,8 @@ export class UserInterface {
     }
 
     deleteButton() {
-        const deleteButton = this.uiComponent.actionButton("Delete");
-        deleteButton.classList.add("deleteButton");
+        const deleteButton = this.uiComponent.actionButton("Done");
+        deleteButton.classList.add("deleteButton", "heroButton");
         return deleteButton;
     }
 }

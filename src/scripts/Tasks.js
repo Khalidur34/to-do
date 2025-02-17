@@ -3,10 +3,11 @@ export class Tasks {
     constructor() {};
 
     allTasks() {
-        return this.tasks;
+        return JSON.parse(localStorage.getItem("tasks"));
     }
 
     addTask(task) {
         this.tasks.push(task);
+        localStorage.setItem("tasks", JSON.stringify(this.tasks));
     }
 }

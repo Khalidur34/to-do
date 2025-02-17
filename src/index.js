@@ -1,16 +1,12 @@
 import "./styles.css";
-import "../src/scripts/Task";
 import { Project } from "../src/scripts/Project";
-import { UserInterface } from "../src/scripts/UserInterface";
 import { Projects } from "../src/scripts/Projects";
 import { Tasks } from "./scripts/Tasks";
-import { Task } from "../src/scripts/Task";
 import { RightDisplay } from "./scripts/RightDisplay";
 import { MainDisplay } from "./scripts/MainDisplay";
 import { ProjectPage } from "./scripts/ProjectPage";
 import { TaskPage } from "./scripts/TaskPage";
 
-const bodyContent = document.querySelector("#content");
 const homeButton = document.querySelector(".home");
 const projectsButton = document.querySelector(".projects");
 
@@ -18,12 +14,11 @@ const projects = new Projects();
 const mainDislay = new MainDisplay();
 const rightDisplay = new RightDisplay();
 const tasks = new Tasks();
-const projectPage = new ProjectPage(projects, mainDislay, rightDisplay);
+const projectPage = new ProjectPage(tasks, projects, mainDislay, rightDisplay);
 const taskPage = new TaskPage(tasks, mainDislay, rightDisplay);
-const sampleTask = new Task("title", "myDescription", "Tomorrow", "medium");
-const sampleProject = new Project("My Project", "Lorem Ipsum", tasks.allTasks());
+const sampleProject = new Project("Default Project", "This contains all the tasks", tasks.allTasks());
 projects.addProject(sampleProject);
-tasks.addTask(sampleTask);
+
 
 taskPage.load();
 //pressing home button displays all the tasks
