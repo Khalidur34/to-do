@@ -21,7 +21,7 @@ export class TaskPage {
 
     loadTasks() {
         let tasksDiv = this.ui.divTasks(this.tasks.allTasks()); 
-        this.rightDisplay.removeContent();
+        this.rightDisplay.removeContent();  
         this.mainDisplay.addContent(tasksDiv);
     }
 
@@ -79,14 +79,14 @@ export class TaskPage {
     displayTaskDetails(button) {
         let targetTask = this.tasks.allTasks()[button.value];
         this.rightDisplay.addContent(this.ui.displayTaskDetails(targetTask));
-        this.deleteTask(button.value);
+        this.deleteTask(targetTask);
     }
 
-    deleteTask(taskIndex) {
+    deleteTask(targetTask) {
         const deleteButton = document.querySelector('.deleteButton');
         deleteButton.addEventListener('click', () => {
             this.rightDisplay.removeContent();
-            this.tasks.allTasks().splice(taskIndex, 1);
+            this.tasks.removeTask(targetTask);
             this.load();
         }); 
     }

@@ -44,6 +44,12 @@ header {
     display: flex;
 }
 
+#content {
+    display: flex;
+    flex-wrap: wrap;
+    width: auto;
+}
+
 #content > h1 {
     margin: 1rem;
     color: var(--rootBlack);

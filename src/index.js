@@ -16,7 +16,7 @@ const rightDisplay = new RightDisplay();
 const tasks = new Tasks();
 const projectPage = new ProjectPage(tasks, projects, mainDislay, rightDisplay);
 const taskPage = new TaskPage(tasks, mainDislay, rightDisplay);
-const sampleProject = new Project("Default Project", "This contains all the tasks", tasks.allTasks());
+const sampleProject = new Project("Default Project", "This contains all the tasks", tasks.tasks);
 projects.addProject(sampleProject);
 
 
