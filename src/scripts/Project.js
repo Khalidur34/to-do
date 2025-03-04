@@ -10,10 +10,6 @@ export class Project {
         this.tasks.push(task);
     }
 
-    removeTask(task) {
-        
-    }
-
     getTasks() {
         return this.tasks;
     }
