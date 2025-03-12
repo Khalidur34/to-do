@@ -112,7 +112,7 @@ export class ProjectPage{
         });
     };
 
-    deleteProject(targetProject) {
+    deleteProject() {
         const deleteButton = document.querySelector('.deleteButton');
         deleteButton.addEventListener('click', () => {
             let temp = this.projects.allProjects().findIndex((targetProject) => targetProject == deleteButton.value);
