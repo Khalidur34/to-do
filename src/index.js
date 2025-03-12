@@ -9,7 +9,6 @@ import { TaskPage } from "./scripts/TaskPage";
 
 const homeButton = document.querySelector(".home");
 const projectsButton = document.querySelector(".projects");
-
 const projects = new Projects();
 const mainDislay = new MainDisplay();
 const rightDisplay = new RightDisplay();

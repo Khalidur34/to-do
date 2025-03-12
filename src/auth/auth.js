@@ -1,8 +1,24 @@
 const rootURL = 'https://xtzdwksy73.execute-api.us-east-1.amazonaws.com';
-//const rootToken = null;
+let rootToken = null;
 
 const signInForm = document.querySelector('#signInForm');
 const signUpForm = document.querySelector('#signUpForm');
+
+function toggleForm() {
+    const signInForm = document.getElementById('signInForm');
+    const signUpForm = document.getElementById('signUpForm');
+    const formTitle = document.getElementById('formTitle');
+
+    if (signInForm.style.display === 'none') {
+        signInForm.style.display = 'block';
+        signUpForm.style.display = 'none';
+        formTitle.textContent = 'Sign In';
+    } else {
+        signInForm.style.display = 'none';
+        signUpForm.style.display = 'block';
+        formTitle.textContent = 'Sign Up';
+    }
+}
 
 signInForm.addEventListener('submit', async(e) => {
     e.preventDefault();
@@ -13,12 +29,15 @@ signInForm.addEventListener('submit', async(e) => {
     const object = {email, password};
 
     try {
-        const response = await post(rootURL + '/auth/signin', object);
+        const response = await post1(rootURL + '/auth/signin', object);
         if(response.status === 200) {
-            console.log('sign in success');
+            let responseObject = await response.json();
+            rootToken = responseObject.token;
+            sessionStorage.setItem("authToken", rootToken);
+            console.log(responseObject.message);
         }
         else if(response.status === 401) {
-            console.log('sign in failed')
+            console.log('sign in failed');
         }
     } catch(error) {
         console.error(error);
@@ -37,25 +56,27 @@ signUpForm.addEventListener('submit', async(e) => {
     const object = {name, email, password};
     try {
         const response = await post(rootURL + '/auth/signup', object);
-        console.log(await response);
-        // if(response.status === 200) {
-        //     console.log('SignUp Success');
-        // }
-        // else if(response.status === 401) {
-        //     console.log('SignUp Failed');
-        // }
+        console.log(response);
+        if(response.status === 200) {
+            let responseObject = await response.json();
+            console.log(responseObject.message);
+            location.reload();
+        }
+        else if(response.status === 401) {
+            console.log('SignUp Failed');
+        }
     } catch(error) {
         console.error(error);
     }
 
 });
 
-async function post (url , submission) {
+async function post1 (url , submission) {
     try {
         const response = await fetch(url, {
-            mode : 'no-cors',
             method: 'POST',
             headers: {
+                //'Authorization': rootToken,
                 'Content-Type': 'application/json'
             }, 
             body: JSON.stringify(submission),
@@ -65,7 +86,7 @@ async function post (url , submission) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
-        return response.json();
+        return response;
 
     } catch (error) {
         console.log(error);
@@ -89,3 +110,5 @@ async function post (url , submission) {
 //     }
     
 // }
+
+//export { post };

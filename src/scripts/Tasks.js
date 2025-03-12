@@ -1,3 +1,5 @@
+import axios from "axios";
+const rootURL = 'https://xtzdwksy73.execute-api.us-east-1.amazonaws.com';
 export class Tasks {
     tasks = [];
     constructor() {};
@@ -13,6 +15,28 @@ export class Tasks {
     addTask(task) {
         this.tasks.push(task);
         localStorage.setItem("tasks", JSON.stringify(this.tasks));
+        //post()
+        console.log(task)
+        
+
+        axios.post(rootURL + '/task', {
+            title: task.title,
+            body: task.description,
+            dueDate: task.dueDate,
+            priority: task.priority
+          }, {
+            headers : {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorage.getItem('authToken')
+            }
+          }
+        )
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          })
     }
 
     removeTask(task) {

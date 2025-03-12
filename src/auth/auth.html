@@ -62,24 +62,6 @@
             <p class="toggle" onclick="toggleForm()">Already have an account? Sign In</p>
         </form>
     </div>
-
-    <script>
-        function toggleForm() {
-            const signInForm = document.getElementById('signInForm');
-            const signUpForm = document.getElementById('signUpForm');
-            const formTitle = document.getElementById('formTitle');
-
-            if (signInForm.style.display === 'none') {
-                signInForm.style.display = 'block';
-                signUpForm.style.display = 'none';
-                formTitle.textContent = 'Sign In';
-            } else {
-                signInForm.style.display = 'none';
-                signUpForm.style.display = 'block';
-                formTitle.textContent = 'Sign Up';
-            }
-        }
-    </script>
 </body>
 <script src="auth.js"></script>
 </html>
